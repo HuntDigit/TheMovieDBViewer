@@ -1,5 +1,5 @@
 //
-//  RestOperationsManager.swift
+//  RestOperationManager.swift
 //  TestForInterview
 //
 //  Created by Andrii Sabinin on 25.10.2025.
@@ -16,7 +16,7 @@ protocol RestOperationsDelegate: AnyObject {
     func cancelAllRequests(identifier: String)
 }
 
-class RestOperationsManager<RestError: BaseRestErrorProtocol> {
+class RestOperationManager<RestError: BaseRestErrorProtocol> {
     var delegate: RestOperationsDelegate?
 
     private let contextIdentifier: String

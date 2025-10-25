@@ -5,3 +5,16 @@
 //  Created by Andrii Sabinin on 25.10.2025.
 //
 
+//RestOperationsDelegate
+typealias RequestCompletion<Model, Response, RestError> = (Result<Response, APIError<RestError>>) -> Void
+    where Model: Decodable, Response: BaseRestResponse<Model>, RestError: BaseRestErrorProtocol
+
+//RestOperationsManager
+typealias RequestExecutionHandler = (RequestState) -> Void
+typealias RequestErrorHandler<RestError> = (APIError<RestError>) -> Void where RestError: BaseRestErrorProtocol
+
+//Operation
+typealias StateCallback = (RequestState) -> Void
+typealias ProgressCallback = (Double) -> Void
+typealias CompleteCallback<Model: Decodable, Response: BaseRestResponse<Model>> = (Response) -> Void
+typealias ErrorCallback<RestError> = (APIError<RestError>) -> Void where RestError: BaseRestErrorProtocol
