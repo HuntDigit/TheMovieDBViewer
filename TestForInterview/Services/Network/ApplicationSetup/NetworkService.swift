@@ -5,7 +5,7 @@
 //  Created by Andrii Sabinin on 25.10.2025.
 //
 
-typealias NetworkOperation<Model> = RestOperation<Model, NetworkResponse<Model>, NetworkError> where Model: Decodable
+typealias NetworkOperation<Model> = RestOperation<Model, NetworkError> where Model: Decodable
 typealias NetworkOperationManager = RestOperationManager<NetworkError>
 
 class NetworkService {

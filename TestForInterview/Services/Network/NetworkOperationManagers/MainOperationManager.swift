@@ -7,24 +7,40 @@
 
 import Foundation
 
-struct ModelResult: Decodable {
+struct TopRatedModelResponse: Decodable {
     let page: Int
-    let results: [FilmModel]
+    let totalPages: Int
+    let totalResults : Int
+    
+    let results: [MoviesModel]
 }
 
-struct FilmModel: Decodable {
+struct MoviesModel: Decodable {
     let adult: Bool
-    let backdrop_path: String
+    let backdropPath: String
+        
+    let id: Int
+    let genreIds: [Int]
+
+    let originalLanguage: String
+    let originalTitle: String
+    let overview: String
+    let popularity: Double
+    let posterPath: String
+    let releaseDate: String
+    let title: String
+    let video: Bool
+    let voteAverage: Double
+    let voteCount: Int
 }
 
 final class MainOperationManager: NetworkOperationManager {
     
-    func getOrdersList(page: Int) -> NetworkOperation<FilmModel> {
+    func getOrdersList(page: Int) -> NetworkOperation<TopRatedModelResponse> {
         var param: [String: String] = [:]
         param["page"] = String(page)
         param["language"] = "en-US"
-        
-        
+
         let request = Request(url: NetworkEndpoints.Config.movieTopRated.endpoint, method: .get, query: param)
         return prepare(request: request)
     }

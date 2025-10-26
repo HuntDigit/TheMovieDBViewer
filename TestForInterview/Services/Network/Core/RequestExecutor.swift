@@ -8,8 +8,12 @@
 import Foundation
 
 protocol СonfigurationProvider {
+    typealias DecodePolicy = JSONDecoder.KeyDecodingStrategy
+    
     var headers: [String: String] { get }
     var baseURL: String { get }
+    
+    var decodePolicy: DecodePolicy { get }
 }
 
 final class RequestExecutor: NSObject {
@@ -19,11 +23,11 @@ final class RequestExecutor: NSObject {
         self.currentConfiguration = configuration
     }
 
-    func execute<Model, Response, RestError>(request: Request, completion: @escaping RequestCompletion<Model, Response, RestError>) -> URLSessionTask {
+    func execute<Model, RestError>(request: Request, completion: @escaping RequestCompletion<Model, RestError>) -> URLSessionTask {
         return performTask(request: request, completion: completion)
      }
 
-    private func performTask<Model, Response, RestError>(request: Request, completion: @escaping RequestCompletion<Model, Response, RestError>) -> URLSessionTask {
+    private func performTask<Model, RestError>(request: Request, completion: @escaping RequestCompletion<Model, RestError>) -> URLSessionTask {
 
         let url = currentConfiguration.baseURL
         let headers = currentConfiguration.headers
@@ -43,11 +47,14 @@ final class RequestExecutor: NSObject {
         return task
     }
 
-    private func processResponse<Model, Response, RestError>(data: Data?,
-                                                             response: URLResponse?,
-                                                             error: Error?,
-                                                             completion: RequestCompletion<Model, Response, RestError>)
-    where Model: Decodable, Response: BaseRestResponse<Model> {
+    private func processResponse<Model, RestError>(data: Data?,
+                                                   response: URLResponse?,
+                                                   error: Error?,
+                                                   completion: RequestCompletion<Model, RestError>)
+    where Model: Decodable {
+
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = currentConfiguration.decodePolicy
         
         if let error = error {
             completion(.failure(.executionError(error: error)))
@@ -57,7 +64,7 @@ final class RequestExecutor: NSObject {
         if let httpResponse = response as? HTTPURLResponse {
             var errorInfo: RestError?
             if let data = data,
-               let info = try? JSONDecoder().decode(RestError.self, from: data) {
+               let info = try? decoder.decode(RestError.self, from: data) {
                 errorInfo = info
             }
             
@@ -73,13 +80,10 @@ final class RequestExecutor: NSObject {
         }
         
         do {
-            let response = try JSONDecoder().decode(Response.self, from: data)
-            completion(.success(response))
+            let model = try decoder.decode(Model.self, from: data)
+            completion(.success(model))
         } catch {
             completion(.failure(.decodindError))
         }
     }
 }
-
-// MARK: - URLSessionTaskDelegate
-extension RequestExecutor: URLSessionTaskDelegate { }

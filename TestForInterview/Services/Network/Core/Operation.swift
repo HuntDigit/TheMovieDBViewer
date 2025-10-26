@@ -7,11 +7,11 @@
 
 import Foundation
 
-final class RestOperation<Model: Decodable, Response: BaseRestResponse<Model>, RestError: BaseRestErrorProtocol> {
+final class RestOperation<Model: Decodable, RestError: BaseRestErrorProtocol> {
 
     private(set) var stateCallback: StateCallback?
     private(set) var uploadProgressCallback: ProgressCallback?
-    private(set) var completeCallback: CompleteCallback<Model, Response>?
+    private(set) var completeCallback: CompleteCallback<Model>?
     private(set) var errorCallback: ErrorCallback<RestError>?
 
     private var execute: (RestOperation) -> Void
@@ -28,10 +28,10 @@ final class RestOperation<Model: Decodable, Response: BaseRestResponse<Model>, R
         }
     }
 
-    var response: Response? {
+    var model: Model? {
         didSet {
-            if let response = response {
-                completeCallback?(response)
+            if let model = model {
+                completeCallback?(model)
             }
         }
     }
@@ -52,10 +52,10 @@ final class RestOperation<Model: Decodable, Response: BaseRestResponse<Model>, R
         return self
     }
 
-    func onComplete(_ completeCallback: @escaping CompleteCallback<Model, Response>) -> Self {
+    func onComplete(_ completeCallback: @escaping CompleteCallback<Model>) -> Self {
         self.completeCallback = completeCallback
-        if let response = self.response {
-            completeCallback(response)
+        if let model = self.model {
+            completeCallback(model)
         }
         return self
     }

@@ -39,4 +39,6 @@ extension NetworkConfiguration: СonfigurationProvider {
         guard let version else { return self.baseApiURL }
         return [self.baseApiURL, version].joined(separator: "/")
     }
+    
+    var decodePolicy: DecodePolicy { .convertFromSnakeCase }
 }

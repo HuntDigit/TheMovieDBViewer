@@ -6,8 +6,8 @@
 //
 
 //RestOperationsDelegate
-typealias RequestCompletion<Model, Response, RestError> = (Result<Response, APIError<RestError>>) -> Void
-    where Model: Decodable, Response: BaseRestResponse<Model>, RestError: BaseRestErrorProtocol
+typealias RequestCompletion<Model, RestError> = (Result<Model, APIError<RestError>>) -> Void
+    where Model: Decodable, RestError: BaseRestErrorProtocol
 
 //RestOperationsManager
 typealias RequestExecutionHandler = (RequestState) -> Void
@@ -16,5 +16,5 @@ typealias RequestErrorHandler<RestError> = (APIError<RestError>) -> Void where R
 //Operation
 typealias StateCallback = (RequestState) -> Void
 typealias ProgressCallback = (Double) -> Void
-typealias CompleteCallback<Model: Decodable, Response: BaseRestResponse<Model>> = (Response) -> Void
+typealias CompleteCallback<Model: Decodable> = (Model) -> Void
 typealias ErrorCallback<RestError> = (APIError<RestError>) -> Void where RestError: BaseRestErrorProtocol

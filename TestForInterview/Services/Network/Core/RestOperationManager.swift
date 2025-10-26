@@ -8,11 +8,11 @@
 import Foundation
 
 protocol RestOperationsDelegate: AnyObject {
-    func execute<Model, Response, RestError>(model: Response.Type,
-                                             errorType: RestError.Type,
-                                             request: Request,
-                                             identifier: String,
-                                             completion: @escaping RequestCompletion<Model, Response, RestError>)
+    func execute<Model, RestError>(model: Model.Type,
+                                   errorType: RestError.Type,
+                                   request: Request,
+                                   identifier: String,
+                                   completion: @escaping RequestCompletion<Model, RestError>)
     func cancelAllRequests(identifier: String)
 }
 
@@ -35,8 +35,8 @@ class RestOperationManager<RestError: BaseRestErrorProtocol> {
         self.errorHandler = errorHandler
     }
 
-    func prepare<Model, Response>(request: Request) -> RestOperation<Model, Response, RestError> {
-        typealias RestOperationBundle = RestOperation<Model, Response, RestError>
+    func prepare<Model>(request: Request) -> RestOperation<Model, RestError> {
+        typealias RestOperationBundle = RestOperation<Model, RestError>
         
         return RestOperationBundle { [weak self] operation in
             guard let self = self else { return }
@@ -45,13 +45,13 @@ class RestOperationManager<RestError: BaseRestErrorProtocol> {
                 self.executionHandler?(.started)
             }
             operation.state = .started
-            self.delegate?.execute(model: Response.self,
+            self.delegate?.execute(model: Model.self,
                                    errorType: RestError.self,
                                    request: request,
                                    identifier: self.contextIdentifier) { result in
                 switch result {
-                case .success(let response) :
-                    operation.response = response
+                case .success(let model) :
+                    operation.model = model
                 case .failure(let error):
                     if operation.errorCallback == nil {
                         self.errorHandler?(error)

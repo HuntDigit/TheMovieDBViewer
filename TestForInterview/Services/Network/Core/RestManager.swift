@@ -10,6 +10,7 @@ import Foundation
 struct EmptyConfiguration: СonfigurationProvider {
     var headers: [String : String] = [:]
     var baseURL: String = ""
+    var decodePolicy: DecodePolicy = .useDefaultKeys
 }
 
 final class RestManager: RestOperationsDelegate {
@@ -30,21 +31,21 @@ final class RestManager: RestOperationsDelegate {
         return operations
     }
     
-    func execute<Model, Response, RestError>(model: Response.Type,
+    func execute<Model, RestError>(model: Model.Type,
                                              errorType: RestError.Type,
                                              request: Request,
                                              identifier: String,
-                                             completion: @escaping RequestCompletion<Model, Response, RestError>) {
-
+                                   completion: @escaping RequestCompletion<Model, RestError>) {
+        
         let task = executor.execute(request: request, completion: completion)
-
+        
         if var existingTasks = tasks[identifier] {
             existingTasks.append(task)
             tasks[identifier] = existingTasks
         } else {
             tasks[identifier] = [task]
         }
-
+        
         task.resume()
     }
  
