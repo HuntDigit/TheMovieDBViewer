@@ -18,9 +18,9 @@ final class MovieOperationManager: NetworkOperationManager {
         return prepare(request: request)
     }
     
-    func getMovieDetails(id: Int) -> NetworkOperation<TopRatedModelResponse> {
+    func getMovieDetails(id: Int) -> NetworkOperation<DetailMoviesModel> {
         
-        let request = Request(url: NetworkEndpoints.Movies.movieTopRated.endpoint, method: .get)
+        let request = Request(url: NetworkEndpoints.Movies.movieDetails(id).endpoint, method: .get)
         return prepare(request: request)
     }
 }

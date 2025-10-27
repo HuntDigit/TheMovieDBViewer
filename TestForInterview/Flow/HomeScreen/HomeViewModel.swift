@@ -13,7 +13,6 @@ class HomeViewModel {
 
     var listOfMovie: [MoviesModel] = []
     var didUpdateList: (([MoviesModel]) -> Void)?
-
     
     private(set) var currentPage: Int = 0
     private(set) var totalPages: Int = 0

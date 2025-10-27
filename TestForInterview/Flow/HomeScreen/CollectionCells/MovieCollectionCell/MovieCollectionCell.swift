@@ -14,7 +14,8 @@ class MovieCollectionCell: UICollectionViewCell {
     @IBOutlet weak var movieCellBackgroundView: UIView!
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
-    
+    @IBOutlet weak var ratingLabel: UILabel!
+
     private var boundingWidth: CGFloat = 0
 
     override func awakeFromNib() {
@@ -23,7 +24,7 @@ class MovieCollectionCell: UICollectionViewCell {
     }
  
     private func setupView() {
-        imageView.layer.cornerRadius = 8
+        imageView.layer.cornerRadius = 15
         imageView.clipsToBounds = true
         imageView.contentMode = .scaleAspectFill
     }
@@ -31,7 +32,7 @@ class MovieCollectionCell: UICollectionViewCell {
     override func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
         let attribute = super.preferredLayoutAttributesFitting(layoutAttributes)
         let width = boundingWidth / 2.0
-        attribute.size = .init(width: width, height: width * 1.5)
+        attribute.size = .init(width: width, height: width * 1.65)
         return attribute
     }
     
@@ -39,6 +40,7 @@ class MovieCollectionCell: UICollectionViewCell {
         super.prepareForReuse()
         imageView.image = nil
         titleLabel.text = nil
+        ratingLabel.text = nil
     }
     
     func setContainerWidth(width: CGFloat) {
@@ -49,6 +51,8 @@ class MovieCollectionCell: UICollectionViewCell {
 extension MovieCollectionCell {
     func configure(with movie: MoviesModel) {
         titleLabel.text = movie.title
+        ratingLabel.text = "Rating: \(movie.voteAverage.description)"
+        
         imageView.backgroundColor = .gray
         
         if let imageURL = movie.fullPosterURL {

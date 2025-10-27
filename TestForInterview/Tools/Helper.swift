@@ -21,3 +21,8 @@ extension MoviesModel {
         URL(string: Helper.imageBaseURL + posterPath)
     }
 }
+extension DetailMoviesModel {
+    var fullPosterURL: URL? {
+        URL(string: Helper.imageBaseURL + posterPath)
+    }
+}

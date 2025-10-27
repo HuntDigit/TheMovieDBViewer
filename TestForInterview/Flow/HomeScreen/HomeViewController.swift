@@ -17,6 +17,11 @@ class HomeViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.navigationController?.isNavigationBarHidden = false
+        self.navigationController?.navigationBar.prefersLargeTitles = true
+        self.navigationItem.largeTitleDisplayMode = .automatic
+        
+        self.title = "Movie"
         
         setupUI()
         subscribeToChanges()
@@ -27,8 +32,10 @@ class HomeViewController: UIViewController {
     private func setupUI() {
 
         if let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout {
-            layout.minimumLineSpacing = 0
-            layout.minimumInteritemSpacing = 0
+            layout.minimumLineSpacing = 16
+            layout.minimumInteritemSpacing = 16
+            layout.sectionInset.left = 16
+            layout.sectionInset.right = 16
         }
         
         //Register ** Cell **
@@ -87,7 +94,7 @@ extension HomeViewController: UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCell(cell: MovieCollectionCell.self, for: indexPath)
         let model = viewModel.listOfMovie[indexPath.row]
 
-        cell.setContainerWidth(width: collectionView.frame.width)
+        cell.setContainerWidth(width: collectionView.frame.width - 16*3)
         cell.configure(with: model)
 
         return cell
@@ -122,16 +129,17 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
 extension HomeViewController: UICollectionViewDelegate {
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+//        let setOfMovie = Set<MoviesModel>(viewModel.listOfMovie)
+//        if setOfMovie.count != viewModel.listOfMovie.count {
+//            print("Duplicate Found")
+//        } else {
+//            print("All are unique")
+//        }
         
-        let setOfMovie = Set<MoviesModel>(viewModel.listOfMovie)
-        if setOfMovie.count != viewModel.listOfMovie.count {
-            print("Duplicate Found")
-        } else {
-            print("All are unique")
-        }
-                
-//        let detailView = DetailView()
-//        let controller = UIHostingController(rootView: detailView)
-//        navigationController?.pushViewController(controller, animated: true)
+        let model = viewModel.listOfMovie[indexPath.row]
+        let detailViewModel = DetailViewModel(movieId: model.id)
+        let detailView = DetailView(viewModel: detailViewModel)
+        let controller = UIHostingController(rootView: detailView)
+        navigationController?.pushViewController(controller, animated: true)
     }
 }

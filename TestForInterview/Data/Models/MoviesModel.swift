@@ -25,3 +25,22 @@ struct MoviesModel: Decodable, Hashable {
     let voteAverage: Double
     let voteCount: Int
 }
+
+extension MoviesModel {
+    static let empty: MoviesModel = .init(
+        adult: false,
+        backdropPath: "",
+        id: 0,
+        genreIds: [],
+        originalLanguage: "",
+        originalTitle: "",
+        overview: "",
+        popularity: 0.0,
+        posterPath: "",
+        releaseDate: "",
+        title: "",
+        video: false,
+        voteAverage: 0.0,
+        voteCount: 0
+    )
+}

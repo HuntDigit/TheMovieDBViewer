@@ -83,6 +83,7 @@ final class RequestExecutor: NSObject {
             let model = try decoder.decode(Model.self, from: data)
             completion(.success(model))
         } catch {
+            print(error)
             completion(.failure(.decodindError))
         }
     }

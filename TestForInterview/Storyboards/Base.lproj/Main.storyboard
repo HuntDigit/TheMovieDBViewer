@@ -48,10 +48,10 @@
             </objects>
             <point key="canvasLocation" x="866.41221374045801" y="-6.3380281690140849"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Home View Navigation Controller-->
         <scene sceneID="F33-4a-fPb">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="TmP-HT-iKV" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="TmP-HT-iKV" customClass="HomeViewNavigationController" customModule="TestForInterview" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="MJj-CW-WXt">
                         <rect key="frame" x="0.0" y="118" width="393" height="54"/>
