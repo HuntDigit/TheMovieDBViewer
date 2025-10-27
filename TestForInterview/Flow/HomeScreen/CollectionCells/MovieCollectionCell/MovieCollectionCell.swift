@@ -7,6 +7,8 @@
 
 import UIKit
 
+import SDWebImage
+
 class MovieCollectionCell: UICollectionViewCell {
     
     @IBOutlet weak var movieCellBackgroundView: UIView!
@@ -23,6 +25,7 @@ class MovieCollectionCell: UICollectionViewCell {
     private func setupView() {
         imageView.layer.cornerRadius = 8
         imageView.clipsToBounds = true
+        imageView.contentMode = .scaleAspectFill
     }
     
     override func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
@@ -35,6 +38,7 @@ class MovieCollectionCell: UICollectionViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         imageView.image = nil
+        titleLabel.text = nil
     }
     
     func setContainerWidth(width: CGFloat) {
@@ -42,3 +46,15 @@ class MovieCollectionCell: UICollectionViewCell {
     }
 }
 
+extension MovieCollectionCell {
+    func configure(with movie: MoviesModel) {
+        titleLabel.text = movie.title
+        imageView.backgroundColor = .gray
+        
+        if let imageURL = movie.fullPosterURL {
+            imageView.sd_setImage(with: imageURL)
+        } else {
+            imageView.image = nil
+        }
+    }
+}

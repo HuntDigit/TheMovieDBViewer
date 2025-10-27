@@ -19,7 +19,6 @@ class HomeViewController: UIViewController {
         super.viewDidLoad()
         
         setupUI()
-        taskOnLoad()
         subscribeToChanges()
     }
 
@@ -32,7 +31,11 @@ class HomeViewController: UIViewController {
             layout.minimumInteritemSpacing = 0
         }
         
+        //Register ** Cell **
         MovieCollectionCell.registerCell(on: collectionView)
+        
+        //Register ** View **
+        MovieFooterActivityView.registerReusableView(on: collectionView)
         
         collectionView.dataSource = self
         collectionView.delegate = self
@@ -40,16 +43,35 @@ class HomeViewController: UIViewController {
         collectionView.reloadData()
     }
     
-    private func taskOnLoad() {
-        viewModel.onLoad()
-    }
-    
-    private func subscribeToChanges() {
-        viewModel.didUpdateList = { [weak self] in
+    func subscribeToChanges() {
+        
+        viewModel.didUpdateList = { [weak self] newItems in
             DispatchQueue.main.async {
-                self?.collectionView.reloadData()
+                guard let self = self else { return }
+
+                // Insert new items at the top of the data source
+                let offset = self.viewModel.listOfMovie.count == 0 ? 0 : self.viewModel.listOfMovie.count - 1
+                self.viewModel.listOfMovie.insert(contentsOf: newItems, at: offset)
+                
+                
+                let start = offset
+                let end = offset + newItems.count
+                
+                let newIndexPaths = (start..<end).map {
+                    IndexPath(item: $0, section: 0)
+                }
+                
+                self.collectionView.performBatchUpdates {
+                    self.collectionView.insertItems(at: newIndexPaths)
+                }
             }
         }
+    }
+}
+
+extension HomeViewController: MovieFooterActivityViewDelegate {
+    func performLoadMore() {
+        viewModel.loadMode()
     }
 }
 
@@ -66,23 +88,50 @@ extension HomeViewController: UICollectionViewDataSource {
         let model = viewModel.listOfMovie[indexPath.row]
 
         cell.setContainerWidth(width: collectionView.frame.width)
-        cell.imageView.backgroundColor = .red
-        cell.titleLabel.text = model.title
-        cell.backgroundColor = .blue
-        cell.movieCellBackgroundView.backgroundColor = .yellow
-        
+        cell.configure(with: model)
+
         return cell
     }
     
-    
+    func collectionView(_ collectionView: UICollectionView,
+                        viewForSupplementaryElementOfKind kind: String,
+                        at indexPath: IndexPath) -> UICollectionReusableView {
+        
+        guard kind == UICollectionView.elementKindSectionFooter,
+              let footerView = collectionView.dequeueReusableSupplementaryView(
+                ofKind: kind,
+                withReuseIdentifier: MovieFooterActivityView.identifier,
+                for: indexPath
+              ) as? MovieFooterActivityView else {
+            return UICollectionReusableView()
+        }
+        
+        footerView.delegate = self
+        footerView.viewWillShow()
+        
+        return footerView
+    }
 }
 
+extension HomeViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
+        return CGSize(width: collectionView.bounds.width, height: 70)
+    }
+}
 
 extension HomeViewController: UICollectionViewDelegate {
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let detailView = DetailView()
-        let controller = UIHostingController(rootView: detailView)
-        navigationController?.pushViewController(controller, animated: true)
+        
+        let setOfMovie = Set<MoviesModel>(viewModel.listOfMovie)
+        if setOfMovie.count != viewModel.listOfMovie.count {
+            print("Duplicate Found")
+        } else {
+            print("All are unique")
+        }
+                
+//        let detailView = DetailView()
+//        let controller = UIHostingController(rootView: detailView)
+//        navigationController?.pushViewController(controller, animated: true)
     }
 }

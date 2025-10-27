@@ -6,13 +6,16 @@
 //
 
 enum NetworkEndpoints {
-    enum Config {
+    enum Movies {
         case movieTopRated
- 
+        case movieDetails(Int)
+        
         var endpoint: Endpoint {
             switch self {
             case .movieTopRated:
                 return Endpoint("movie/top_rated")
+            case .movieDetails(let id):
+                return Endpoint("movie/\(id)")
             }
         }
     }

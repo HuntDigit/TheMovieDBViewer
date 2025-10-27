@@ -6,19 +6,19 @@
 //
 
 import UIKit
+import SDWebImage
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        setupServices()
         return true
     }
 
     func setupServices() {
-        
+        // Prevent excessive memory usage while scrolling
+        SDImageCache.shared.config.shouldCacheImagesInMemory = false
     }
     
     // MARK: UISceneSession Lifecycle

@@ -21,9 +21,18 @@ extension UICollectionView {
     }
 }
 
+extension UICollectionReusableView {
+    static func registerReusableView(on collection: UICollectionView) {
+        let nib = UINib(nibName: String(describing: Self.self), bundle: .main)
+        collection.register(nib,
+                            forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter,
+                            withReuseIdentifier: Self.identifier)
+    }
+}
+
 extension UICollectionViewCell {
     static func registerCell(on collection: UICollectionView) {
         let nib = UINib(nibName: String(describing: Self.self), bundle: .main)
-        collection.register(nib, forCellWithReuseIdentifier: String(describing: Self.self))
+        collection.register(nib, forCellWithReuseIdentifier: String(describing: Self.identifier))
     }
 }
