@@ -26,6 +26,8 @@ struct DetailView: View {
                 VStack(alignment: .leading, spacing: 0) {
                     ScrollView {
                         Text(viewModel.detailModelModel?.overview ?? "")
+                            .frame(maxWidth: .infinity,
+                                   alignment: .leading)
                             .font(.system(size: 12))
                             .padding(.top, 16)
                     }

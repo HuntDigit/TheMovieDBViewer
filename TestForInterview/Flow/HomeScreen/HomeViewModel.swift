@@ -20,10 +20,6 @@ class HomeViewModel {
 
     private let paginationStep: Int = 2
         
-    init(listOfMovie: [MoviesModel] = []) {
-        self.listOfMovie = listOfMovie
-    }
-    
     func loadMode() {
         // Prepare:
         // Extra protection ( not happened but ... )
@@ -44,6 +40,7 @@ class HomeViewModel {
             
             debugPrint("Load Page: \(page)")
             
+            // Add operation to perform all of them concurrently
             operations.append(
                 networkService.getOrdersList(page: page)
             )
@@ -54,6 +51,7 @@ class HomeViewModel {
         // After that, handle the results to process the data and append it to the main movie list.
         // The result of concurrent operations is unsorted because each task finishes at a different time.
         // Apply minimal sorting and unwrap the list.
+//        DispatchQueue.main.asyncAfter(deadline: .now() + 3, execute: {
         
         OperationGroupProvider.performConcurentOperation(operations: operations) { result in
             self.isLoading = false
@@ -70,6 +68,8 @@ class HomeViewModel {
                 print(error.localizedDescription)
             }
         }
+        
+//        })
     }
 }
 

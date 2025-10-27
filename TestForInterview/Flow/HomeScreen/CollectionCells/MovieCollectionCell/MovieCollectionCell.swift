@@ -27,6 +27,9 @@ class MovieCollectionCell: UICollectionViewCell {
         imageView.layer.cornerRadius = 15
         imageView.clipsToBounds = true
         imageView.contentMode = .scaleAspectFill
+        
+        titleLabel.font = .systemFont(ofSize: 14, weight: .semibold)
+        ratingLabel.font = .systemFont(ofSize: 10, weight: .medium)
     }
     
     override func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
@@ -51,7 +54,7 @@ class MovieCollectionCell: UICollectionViewCell {
 extension MovieCollectionCell {
     func configure(with movie: MoviesModel) {
         titleLabel.text = movie.title
-        ratingLabel.text = "Rating: \(movie.voteAverage.description)"
+        ratingLabel.text = "Rating: \(String(format: "%.1f", movie.voteAverage))"
         
         imageView.backgroundColor = .gray
         

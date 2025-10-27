@@ -12,6 +12,7 @@
 		CA6393522EAFCD5C008A5AC2 /* PosterImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6393512EAFCD55008A5AC2 /* PosterImageView.swift */; };
 		CA6393562EAFED12008A5AC2 /* ButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6393552EAFED0B008A5AC2 /* ButtonStyle.swift */; };
 		CA6393582EAFED2F008A5AC2 /* ViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6393572EAFED29008A5AC2 /* ViewExtension.swift */; };
+		CA63935A2EB006F3008A5AC2 /* AppearanceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6393592EB006E0008A5AC2 /* AppearanceManager.swift */; };
 		CACF81B42EAE8DC400CABAE8 /* MovieCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CACF81B32EAE8DC300CABAE8 /* MovieCollectionCell.swift */; };
 		CACF81B62EAE8DDF00CABAE8 /* MovieCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CACF81B52EAE8DDF00CABAE8 /* MovieCollectionCell.xib */; };
 		CACF81B82EAE956300CABAE8 /* UIVIew+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CACF81B72EAE954D00CABAE8 /* UIVIew+Extension.swift */; };
@@ -52,6 +53,7 @@
 		CA6393512EAFCD55008A5AC2 /* PosterImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PosterImageView.swift; sourceTree = "<group>"; };
 		CA6393552EAFED0B008A5AC2 /* ButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonStyle.swift; sourceTree = "<group>"; };
 		CA6393572EAFED29008A5AC2 /* ViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewExtension.swift; sourceTree = "<group>"; };
+		CA6393592EB006E0008A5AC2 /* AppearanceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppearanceManager.swift; sourceTree = "<group>"; };
 		CACF81B32EAE8DC300CABAE8 /* MovieCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieCollectionCell.swift; sourceTree = "<group>"; };
 		CACF81B52EAE8DDF00CABAE8 /* MovieCollectionCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MovieCollectionCell.xib; sourceTree = "<group>"; };
 		CACF81B72EAE954D00CABAE8 /* UIVIew+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIVIew+Extension.swift"; sourceTree = "<group>"; };
@@ -210,6 +212,7 @@
 		CADB53EE2EACC0A300D79F4C /* Tools */ = {
 			isa = PBXGroup;
 			children = (
+				CA6393592EB006E0008A5AC2 /* AppearanceManager.swift */,
 				CACF81CD2EAF66AC00CABAE8 /* OperationGroupProvider.swift */,
 				CACF81B72EAE954D00CABAE8 /* UIVIew+Extension.swift */,
 				CADB53DA2EACC03F00D79F4C /* Helper.swift */,
@@ -424,6 +427,7 @@
 				CACF81B42EAE8DC400CABAE8 /* MovieCollectionCell.swift in Sources */,
 				CADB53F82EACC53900D79F4C /* NetworkService.swift in Sources */,
 				CADB53EA2EACC03F00D79F4C /* HomeViewController.swift in Sources */,
+				CA63935A2EB006F3008A5AC2 /* AppearanceManager.swift in Sources */,
 				CADB540D2EACF51A00D79F4C /* APIError.swift in Sources */,
 				CACF81B82EAE956300CABAE8 /* UIVIew+Extension.swift in Sources */,
 			);
