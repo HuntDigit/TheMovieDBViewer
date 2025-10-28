@@ -33,7 +33,7 @@ struct DetailView: View {
                     }
                     .frame(maxHeight: 100)
                     
-                    Text(viewModel.detailModelModel?.releaseDate ?? "")
+                    Text(viewModel.detailModelModel?.releaseDateFormated ?? "")
                         .font(.system(size: 12))
                         .padding(.top, 16)
                 }

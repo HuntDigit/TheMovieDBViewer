@@ -18,14 +18,13 @@ struct LayoutRules {
 class HomeViewController: UIViewController {
     
     @IBOutlet private weak var collectionView: UICollectionView!
-
+    
     // MARK: - ViewModel
     let viewModel: HomeViewModel = HomeViewModel()
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        
         setupUI()
         subscribeToChanges()
     }
@@ -77,7 +76,13 @@ class HomeViewController: UIViewController {
     }
     
     @objc private func searchTapped() {
-        
+        let alert = UIAlertController(
+            title: "Opps!",
+            message: "Search not available yet =(",
+            preferredStyle: .alert
+        )
+        alert.addAction(UIAlertAction(title: "It's okey", style: .default, handler: nil))
+        present(alert, animated: true, completion: nil)
     }
     
     @objc private func appearanceTapped() {

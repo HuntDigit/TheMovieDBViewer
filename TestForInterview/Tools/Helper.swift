@@ -26,3 +26,21 @@ extension DetailMoviesModel {
         URL(string: Helper.imageBaseURL + posterPath)
     }
 }
+
+struct DateFormatterHelper {
+    
+    private let dateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+        return formatter
+    }()
+ 
+    func formatDate(_ dateString: String) -> String? {
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        if let date = dateFormatter.date(from: dateString) {
+            dateFormatter.dateFormat = "yyyy MMM dd"
+            return dateFormatter.string(from: date)
+        }
+        return nil
+    }
+}

@@ -10,7 +10,7 @@ import Foundation
 class DetailViewModel: ObservableObject {
     
     lazy var networkService = NetworkService.shared.instantiate(MovieOperationManager.self, in: self)
-
+    
     @Published var detailModelModel: DetailMoviesModel?
     @Published var error: Error?
     
